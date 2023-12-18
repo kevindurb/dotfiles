@@ -11,6 +11,7 @@ zsh-users/zsh-history-substring-search
 zsh-users/zsh-syntax-highlighting
 zsh-users/zsh-autosuggestions
 
+ohmyzsh/ohmyzsh path:lib
 ohmyzsh/ohmyzsh path:plugins/git-auto-fetch
 ohmyzsh/ohmyzsh path:plugins/ssh-agent
 ohmyzsh/ohmyzsh path:plugins/emoji-clock
