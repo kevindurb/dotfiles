@@ -1,4 +1,6 @@
-["antigen.zsh"]
-  type = "file"
-  url = "https://git.io/antigen"
-  refreshPeriod = "672h"
+[".antidote"]
+  type = "archive"
+  url = "https://github.com/mattmc3/antidote/archive/main.tar.gz"
+  exact = true
+  stripComponents = 1
+  refreshPeriod = "168h"
