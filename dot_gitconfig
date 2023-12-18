@@ -1,0 +1,79 @@
+[core]
+  editor = nvim
+  excludesfile = ~/.gitignore
+[user]
+  name = Kevin Durbin
+  email = kevindurb@fastmail.com
+[color]
+  status = auto
+  branch = auto
+  ui = true
+[color "branch"]
+  current = yellow reverse
+  local = yellow
+  remote = green
+[color "status"]
+  added = green
+  changed = red
+  untracked = cyan
+[push]
+  default = current
+[rerere]
+  enabled = 1
+[filter "lfs"]
+  clean = git-lfs clean -- %f
+  smudge = git-lfs smudge -- %f
+  process = git-lfs filter-process
+  required = true
+[commit]
+  template = ~/.stCommitMsg
+  gpgsign = true
+[color "diff-highlight"]
+  oldNormal = red bold
+  oldHighlight = red bold 52
+  newNormal = green bold
+  newHighlight = green bold 22
+[color "diff"]
+  meta = yellow
+  frag = magenta bold
+  commit = yellow bold
+  old = red bold
+  new = green bold
+  whitespace = red reverse
+[credential]
+  helper = 
+  helper = manager
+[pull]
+  rebase = false
+[init]
+  defaultBranch = main
+[cola]
+  spellcheck = false
+[gpg]
+  format = ssh
+[gpg "ssh"]
+  defaultKeyCommand = ssh-add -L
+[tag]
+  gpgsign = true
+[core]
+  pager = delta -s
+[interactive]
+  diffFilter = delta --color-only
+[delta]
+  navigate = true
+  light = false
+[merge]
+  conflictstyle = diff3
+[diff]
+  colorMoved = default
+[credential "https://github.com"]
+	username = kevindurb
+[credential "https://gitea.beaver-cloud.ts.net"]
+	provider = generic
+[url "https://gitea.beaver-cloud.ts.net/"]
+  insteadOf = gitea:
+[url "https://github.com/"]
+  insteadOf = github:
+  insteadOf = gh:
+[url "https://gitlab.com/"]
+  insteadOf = gitlab:
