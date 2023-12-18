@@ -1,0 +1,7 @@
+#! /bin/bash
+kitty +kitten themes --reload-in=all Catppuccin-Latte
+mkdir -p ~/.config/nvim/after/plugin
+echo "vim.o.background = 'light'" > ~/.config/nvim/after/plugin/theme-color.lua
+sed -i .bak 's/macchiato/latte/g' ~/.dotfiles/tmux.conf
+tmux source ~/.tmux.conf
+osascript -e 'tell application "System Events" to tell appearance preferences to set dark mode to false'
