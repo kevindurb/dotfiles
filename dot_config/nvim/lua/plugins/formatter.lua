@@ -1,10 +1,10 @@
 return {
 	"mhartington/formatter.nvim", -- auto format files
 	opts = function()
-    local util = require("formatter.util")
-    local defaults = require("formatter.defaults")
-    local typescript = require("formatter.filetypes.typescript")
-    local javascript = require("formatter.filetypes.javascript")
+		local util = require("formatter.util")
+		local defaults = require("formatter.defaults")
+		local typescript = require("formatter.filetypes.typescript")
+		local javascript = require("formatter.filetypes.javascript")
 
 		return {
 			filetype = {
@@ -37,6 +37,7 @@ return {
 				php = { require("formatter.filetypes.php").php_cs_fixer },
 				yaml = { require("formatter.filetypes.yaml").prettierd },
 				pug = { util.copyf(defaults.prettierd) },
+				toml = { require("formatter.filetypes.toml").taplo },
 			},
 			["*"] = { require("formatter.filetypes.any").remove_trailing_whitespace },
 		}
