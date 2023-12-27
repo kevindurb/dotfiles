@@ -1,3 +1,8 @@
+{{ $packageManagerChoices := list "brew" "dnf" -}}
+{{ $packageManager := promptChoiceOnce . "packageManager" "Which package manager would you like to use?" $packageManagerChoices -}}
+
 [git]
   autoCommit = true
   autoPush = true
+[data]
+  packageManager = {{- $packageManager | quote -}}

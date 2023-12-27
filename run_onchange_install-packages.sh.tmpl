@@ -1,6 +1,7 @@
 #! /bin/bash
 
-{{ if eq .chezmoi.os "darwin" -}}
+{{ if eq .packageManager "brew" -}}
+
 brew bundle --no-lock --file=/dev/stdin <<EOF
 {{ range .packages.darwin.taps -}}
 tap {{ . | quote }}
@@ -12,4 +13,10 @@ brew {{ . | quote }}
 cask {{ . | quote }}
 {{ end -}}
 EOF
+
+{{ else if eq .packageManager "dnf" -}}
+
+echo "ERROR: Missing dnf functionality"
+exit 1
+
 {{ end -}}
