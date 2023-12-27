@@ -27,3 +27,5 @@ ohmyzsh/ohmyzsh path:plugins/colored-man-pages
 ohmyzsh/ohmyzsh path:plugins/command-not-found
 
 chrissicool/zsh-256color
+
+zpm-zsh/clipboard
