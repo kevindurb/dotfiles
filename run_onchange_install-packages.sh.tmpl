@@ -1,24 +1,22 @@
-{{ if eq .chezmoi.os "darwin" -}}
-#!/bin/bash
+#! /bin/bash
 
-# Disable media keys opening iTunes
-launchctl unload -w /System/Library/LaunchAgents/com.apple.rcd.plist
+{{ if eq .packageManager "brew" -}}
 
-# Set screenshot location to ~/Pictures/Screenshots
-mkdir -p ~/Pictures/Screenshots
-defaults write com.apple.screencapture location ~/Pictures/Screenshots/
-
-# Enable safari develop menu
-defaults write com.apple.safari IncludeDevelopMenu -bool true
-
-# disable hot corners
-defaults write com.apple.dock wvous-tl-corner -int 0
-defaults write com.apple.dock wvous-tr-corner -int 0
-defaults write com.apple.dock wvous-bl-corner -int 0
-defaults write com.apple.dock wvous-br-corner -int 0
-
-# autohide dock
-defaults write com.apple.dock autohide 1
-
+brew bundle --no-lock --file=/dev/stdin <<EOF
+{{ range .packages.darwin.taps -}}
+tap {{ . | quote }}
+{{ end -}}
+{{ range .packages.darwin.brews -}}
+brew {{ . | quote }}
+{{ end -}}
+{{ range .packages.darwin.casks -}}
+cask {{ . | quote }}
+{{ end -}}
 EOF
+
+{{ else if eq .packageManager "dnf" -}}
+
+echo "ERROR: Missing dnf functionality"
+exit 1
+
 {{ end -}}
