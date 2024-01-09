@@ -1,4 +1,5 @@
 return {
-  'kkoomen/vim-doge',
-  build = ':call doge#install()',
+	"kkoomen/vim-doge",
+	enable = false,
+	build = ":call doge#install()",
 }
