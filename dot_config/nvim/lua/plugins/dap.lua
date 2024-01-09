@@ -16,6 +16,23 @@ return {
       command = 'firefox-debug-adapter',
     }
 
+    dap.adapters.php = {
+      type = 'executable',
+      command = 'php-debug-adapter',
+    }
+
+    dap.configurations.php = {
+      {
+        type = 'php',
+        request = 'launch',
+        name = 'Listen for Xdebug',
+        port = 9000,
+        pathMappings = {
+          ['/var/www'] = '${workspaceFolder}',
+        },
+      },
+    }
+
     for _, language in ipairs({ 'typescript', 'javascript' }) do
       require('dap').configurations[language] = {
         {
