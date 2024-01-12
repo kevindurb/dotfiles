@@ -9,7 +9,7 @@ disabled = true
 [cmd_duration]
 
 [hostname]
-ssh_only = true
+ssh_only = false
 
 [php]
 
