@@ -30,6 +30,12 @@ return {
         pathMappings = {
           ['/var/www'] = '${workspaceFolder}',
         },
+        xdebugSettings = {
+          max_data = 100000,
+          max_children = 1000,
+          max_depth = 5,
+          show_hidden = 1,
+        },
       },
     }
 
