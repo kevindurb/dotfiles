@@ -40,9 +40,6 @@
   old = red bold
   new = green bold
   whitespace = red reverse
-[credential]
-  helper = 
-  helper = manager
 [pull]
   rebase = false
 [init]
@@ -66,12 +63,6 @@
   conflictstyle = diff3
 [diff]
   colorMoved = default
-[credential "https://github.com"]
-	username = kevindurb
-[credential "https://gitea.beaver-cloud.ts.net"]
-	provider = generic
-[url "https://gitea.beaver-cloud.ts.net/"]
-  insteadOf = gitea:
 [url "https://github.com/"]
   insteadOf = github:
   insteadOf = gh:
