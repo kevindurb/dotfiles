@@ -14,9 +14,4 @@ cask {{ . | quote }}
 {{ end -}}
 EOF
 
-{{ else if eq .packageManager "dnf" -}}
-
-echo "ERROR: Missing dnf functionality"
-exit 1
-
 {{ end -}}
