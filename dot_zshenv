@@ -12,7 +12,6 @@ export EDITOR='nvim'
 export VISUAL='nvim'
 export FZF_DEFAULT_COMMAND='rg --files'
 export LESS="-SRXF"
-export HISTFILE=$HOME/.zhistory
 export ASPNETCORE_ENVIRONMENT="Development"
 export DISABLE_AUTO_TITLE="true"
 
