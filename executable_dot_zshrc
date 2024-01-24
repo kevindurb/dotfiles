@@ -8,26 +8,11 @@ antidote load
 # }}}
 
 # {{{ Aliases
-if [ -x "$(command -v bat)" ]; then
-  alias cat="bat"
-fi
-if [ -x "$(command -v batcat)" ]; then
-  alias cat="batcat"
-fi
-if [ -x "$(command -v prettyping)" ]; then
-  alias ping="prettyping"
-fi
-if [ -x "$(command -v ncdu)" ]; then
-  alias du="ncdu --color dark -rr -x --exclude .git --exclude node_modules"
-fi
-if [ -x "$(command -v nvim)" ]; then
-  alias vim="nvim"
-fi
-if [ -x "$(command -v kubecolor)" ]; then
-  source <(kubectl completion zsh)
-  alias kubectl="kubecolor"
-  compdef kubecolor=kubectl
-fi
+[ -x "$(command -v bat)" ] && alias cat="bat"
+[ -x "$(command -v batcat)" ] && alias cat="batcat"
+[ -x "$(command -v prettyping)" ] && alias ping="prettyping"
+[ -x "$(command -v ncdu)" ] && alias du="ncdu --color dark -rr -x --exclude .git --exclude node_modules"
+[ -x "$(command -v nvim)" ] && alias vim="nvim"
 
 if [ -x "$(command -v eza)" ]; then
   alias ll="eza -laF"
@@ -87,6 +72,8 @@ setopt SHARE_HISTORY
 # {{{ Add Starship Prompt
 eval "$(starship init zsh)"
 # }}}
+
+[ -x "$(command -v fastfetch)" ] && fastfetch
 
 # Keep this here to prevent fzf from adding
 # unneeded line
