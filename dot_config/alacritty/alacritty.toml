@@ -1,4 +1,4 @@
-import = ['~/.config/alacritty/tokyo-night-storm.toml']
+import = ['~/.config/alacritty/nord.toml']
 [font]
 size = 14
 [font.normal]
