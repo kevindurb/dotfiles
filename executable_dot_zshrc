@@ -73,8 +73,6 @@ setopt SHARE_HISTORY
 eval "$(starship init zsh)"
 # }}}
 
-[ -x "$(command -v fastfetch)" ] && fastfetch
-
 # Keep this here to prevent fzf from adding
 # unneeded line
 # [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
