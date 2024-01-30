@@ -1,4 +1,5 @@
 return {
-  'pfeiferj/nvim-hurl',
-  opts = {},
+	"pfeiferj/nvim-hurl",
+	ft = { "hurl" },
+	opts = {},
 }
