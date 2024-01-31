@@ -3,3 +3,5 @@ import = ['~/.config/alacritty/nord.toml']
 size = 14
 [font.normal]
 family = "JetBrainsMono Nerd Font"
+[env]
+TERM = "xterm-256color"
