@@ -1,4 +1,4 @@
-import = ['~/.config/alacritty/nord.toml']
+import = ['~/.config/alacritty/catppuccin-macchiato.toml']
 [font]
 size = 14
 [font.normal]
