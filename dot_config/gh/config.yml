@@ -4,11 +4,11 @@ editor:
 prompt: enabled
 pager: delta -s
 aliases:
-    co: pr checkout
-    myprs: pr list -S 'author:@me is:open'
-    prurl: pr view --json url -q '.url'
-    prv: pr view --comments
-    i: issue
+  co: pr checkout
+  myprs: pr list -S 'author:@me is:open'
+  prurl: pr view --json url -q '.url'
+  prv: pr view --comments
+  i: issue
 http_unix_socket:
 browser:
 version: "1"
