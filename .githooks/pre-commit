@@ -1,0 +1,5 @@
+#!/bin/sh
+
+yamlfmt './**/*.{yaml,yml}'
+stylua './dot_config/nvim'
+git add --all
