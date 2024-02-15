@@ -63,8 +63,3 @@
   conflictstyle = diff3
 [diff]
   colorMoved = default
-[url "https://github.com/"]
-  insteadOf = github:
-  insteadOf = gh:
-[url "https://gitlab.com/"]
-  insteadOf = gitlab:
