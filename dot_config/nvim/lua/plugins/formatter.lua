@@ -39,6 +39,7 @@ return {
         pug = { util.copyf(defaults.prettierd) },
         toml = { require('formatter.filetypes.toml').taplo },
         cs = { require('formatter.filetypes.cs').dotnetformat },
+        go = { require('formatter.filetypes.go').gofmt },
       },
       ['*'] = { require('formatter.filetypes.any').remove_trailing_whitespace },
     }

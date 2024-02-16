@@ -7,6 +7,14 @@ return {
     'MunifTanjim/nui.nvim',
   },
   opts = {
+    event_handlers = {
+      {
+        event = 'file_opened',
+        handler = function()
+          require('neo-tree.command').execute({ action = 'close' })
+        end,
+      },
+    },
     close_if_last_window = true,
     buffers = {
       follow_current_file = {
@@ -21,6 +29,8 @@ return {
     },
   },
   init = function()
-    vim.keymap.set('n', '-', '<CMD>Neotree toggle reveal<CR>', { desc = 'Toggle Neotree' })
+    vim.keymap.set('n', '-', function()
+      require('neo-tree.command').execute({ action = 'focus', toggle = true, reveal = true })
+    end, { desc = 'Toggle Neotree' })
   end,
 }
