@@ -19,7 +19,6 @@ local options = {
     'openscad-lsp',
     'php-cs-fixer',
     'php-debug-adapter',
-    'phpcs',
     'phpstan',
     'prettierd',
     'shellcheck',
