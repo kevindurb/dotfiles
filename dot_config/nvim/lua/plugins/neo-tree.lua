@@ -7,14 +7,6 @@ return {
     'MunifTanjim/nui.nvim',
   },
   opts = {
-    event_handlers = {
-      {
-        event = 'file_opened',
-        handler = function()
-          require('neo-tree.command').execute({ action = 'close' })
-        end,
-      },
-    },
     close_if_last_window = true,
     buffers = {
       follow_current_file = {
