@@ -22,7 +22,7 @@ return {
   },
   init = function()
     vim.keymap.set('n', '-', function()
-      require('neo-tree.command').execute({ action = 'focus', toggle = true, reveal = true })
+      require('neo-tree.command').execute({ action = 'focus', reveal = true })
     end, { desc = 'Toggle Neotree' })
   end,
 }
