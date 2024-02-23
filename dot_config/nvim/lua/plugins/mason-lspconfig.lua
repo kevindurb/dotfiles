@@ -14,7 +14,23 @@ return {
     end)
 
     require('mason-lspconfig').setup({
-      ensure_installed = {},
+      ensure_installed = {
+        'ansiblels',
+        'bashls',
+        'cssls',
+        'dockerls',
+        'eslint',
+        'graphql',
+        'html',
+        'intelephense',
+        'jsonls',
+        'lua_ls',
+        'marksman',
+        'openscad_lsp',
+        'sqlls',
+        'tsserver',
+        'yamlls',
+      },
       handlers = {
         lsp_zero.default_setup,
 
