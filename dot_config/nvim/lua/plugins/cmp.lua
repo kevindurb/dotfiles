@@ -8,6 +8,7 @@ return {
     'f3fora/cmp-spell', -- auto complete spelling
     'petertriho/cmp-git', -- auto complete git things
     'davidsierradz/cmp-conventionalcommits', -- auto complete conventional commits
+    'saadparwaiz1/cmp_luasnip',
   },
   config = function()
     local cmp = require('cmp')
@@ -39,6 +40,7 @@ return {
         ['<C-Space>'] = cmp.mapping.confirm({ select = true }),
       },
       sources = {
+        { name = 'luasnip' },
         { name = 'nvim_lsp' },
         { name = 'path' },
         {
