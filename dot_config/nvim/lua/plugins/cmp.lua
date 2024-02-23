@@ -12,6 +12,8 @@ return {
   config = function()
     local cmp = require('cmp')
     local lspkind = require('lspkind')
+    local lsp_zero = require('lsp-zero')
+    lsp_zero.extend_cmp()
 
     cmp.setup({
       snippet = {

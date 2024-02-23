@@ -1,37 +1,3 @@
-local handlers = {
-  function(server_name)
-    local capabilities = require('cmp_nvim_lsp').default_capabilities()
-    require('lspconfig')[server_name].setup({
-      capabilities = capabilities,
-    })
-  end,
-  ['lua_ls'] = function()
-    local capabilities = require('cmp_nvim_lsp').default_capabilities()
-    require('lspconfig').lua_ls.setup({
-      capabilities = capabilities,
-      settings = { Lua = { diagnostics = { globals = { 'vim' } } } },
-    })
-  end,
-  ['yamlls'] = function()
-    local capabilities = require('cmp_nvim_lsp').default_capabilities()
-    require('lspconfig').yamlls.setup({
-      capabilities = capabilities,
-      settings = { yaml = { schemas = require('schemastore').yaml.schemas() } },
-    })
-  end,
-  ['jsonls'] = function()
-    local capabilities = require('cmp_nvim_lsp').default_capabilities()
-    require('lspconfig').jsonls.setup({
-      capabilities = capabilities,
-      settings = {
-        json = {
-          schemas = require('schemastore').json.schemas(),
-          validate = { enable = true },
-        },
-      },
-    })
-  end,
-}
 return {
   'williamboman/mason-lspconfig.nvim', -- connects mason to lspconfig
   dependencies = {
@@ -39,5 +5,41 @@ return {
     'hrsh7th/cmp-nvim-lsp',
     'williamboman/mason.nvim',
   },
-  opts = { handlers = handlers },
+  config = function()
+    local lsp_zero = require('lsp-zero')
+    lsp_zero.extend_lspconfig()
+
+    lsp_zero.on_attach(function(client, bufnr)
+      lsp_zero.default_keymaps({ buffer = bufnr })
+    end)
+
+    require('mason-lspconfig').setup({
+      ensure_installed = {},
+      handlers = {
+        lsp_zero.default_setup,
+
+        lua_ls = function()
+          local lua_opts = lsp_zero.nvim_lua_ls()
+          require('lspconfig').lua_ls.setup(lua_opts)
+        end,
+
+        yamlls = function()
+          require('lspconfig').yamlls.setup({
+            settings = { yaml = { schemas = require('schemastore').yaml.schemas() } },
+          })
+        end,
+
+        jsonls = function()
+          require('lspconfig').jsonls.setup({
+            settings = {
+              json = {
+                schemas = require('schemastore').json.schemas(),
+                validate = { enable = true },
+              },
+            },
+          })
+        end,
+      },
+    })
+  end,
 }
