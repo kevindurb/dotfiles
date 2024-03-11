@@ -64,5 +64,20 @@ return {
         },
       }
     end
+
+    vim.fn.sign_define('DapBreakpoint', { text = '', texthl = 'DiagnosticSignInfo', linehl = '', numhl = '' })
+    vim.fn.sign_define(
+      'DapBreakpointRejected',
+      { text = '', texthl = 'DiagnosticSignError', linehl = '', numhl = '' }
+    )
+    vim.fn.sign_define(
+      'DapBreakpointCondition',
+      { text = '', texthl = 'DiagnosticSignInfo', linehl = '', numhl = '' }
+    )
+    vim.fn.sign_define('DapLogPoint', { text = '', texthl = 'DiagnosticSignInfo', linehl = '', numhl = '' })
+    vim.fn.sign_define(
+      'DapStopped',
+      { text = '▶️', texthl = 'DiagnosticSignWarn', linehl = 'Visual', numhl = 'DiagnosticSignWarn' }
+    )
   end,
 }
