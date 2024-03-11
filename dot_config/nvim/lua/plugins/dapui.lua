@@ -40,7 +40,7 @@ return {
 
     vim.keymap.set('n', '<F6>', function()
       dap.close()
-      require('dapui').close()
+      dapui.close()
     end)
 
     vim.keymap.set('n', '<F10>', function()
