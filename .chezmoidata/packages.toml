@@ -39,6 +39,7 @@ brews = [
   "gnupg",
   "gnutls",
   "go",
+  "go-task",
   "htop",
   "httpie",
   "jq",
