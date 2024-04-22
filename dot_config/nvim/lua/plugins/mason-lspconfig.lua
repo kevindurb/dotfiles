@@ -4,9 +4,12 @@ return {
     'b0o/schemastore.nvim',
     'hrsh7th/cmp-nvim-lsp',
     'williamboman/mason.nvim',
+    'someone-stole-my-name/yaml-companion.nvim',
   },
   config = function()
     local lsp_zero = require('lsp-zero')
+    local yamlCompanion = require('yaml-companion')
+    local yamlCompanionConfig = yamlCompanion.setup()
     lsp_zero.extend_lspconfig()
 
     lsp_zero.on_attach(function(client, bufnr)
@@ -40,9 +43,7 @@ return {
         end,
 
         yamlls = function()
-          require('lspconfig').yamlls.setup({
-            settings = { yaml = { schemas = require('schemastore').yaml.schemas() } },
-          })
+          require('lspconfig').yamlls.setup(yamlCompanionConfig)
         end,
 
         jsonls = function()
