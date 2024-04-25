@@ -1,12 +1,13 @@
 [packages.darwin]
 taps = [
+  "FelixKratz/formulae",
   "homebrew/bundle",
+  "homebrew/cask-fonts",
   "homebrew/cask-versions",
+  "homebrew/linux-fonts",
   "homebrew/services",
   "localsend/localsend",
   "microsoft/git",
-  "homebrew/cask-fonts",
-  "homebrew/linux-fonts",
 ]
 brews = [
   "ansible",
@@ -68,6 +69,7 @@ brews = [
   "pv",
   "qemu",
   "ripgrep",
+  "sketchybar",
   "speedtest-cli",
   "thefuck",
   "tig",
