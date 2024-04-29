@@ -2,6 +2,7 @@ return {
   'rcarriga/nvim-dap-ui', -- debugging ui
   dependencies = {
     'mfussenegger/nvim-dap', -- debugging
+    'nvim-neotest/nvim-nio',
   },
   config = function()
     local dapui = require('dapui')
