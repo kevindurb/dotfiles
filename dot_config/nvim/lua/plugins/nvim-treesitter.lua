@@ -2,6 +2,7 @@ return {
   'nvim-treesitter/nvim-treesitter', -- the base for all things better
   dependencies = {
     'pfeiferj/nvim-hurl',
+    'apple/pkl-neovim',
   },
   build = ':TSUpdate',
   opts = {
@@ -16,6 +17,7 @@ return {
       'typescript',
       'vim',
       'vimdoc',
+      'pkl',
     },
     sync_install = false,
     auto_install = true,
