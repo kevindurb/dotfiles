@@ -2,7 +2,6 @@
 taps = [
   "FelixKratz/formulae",
   "homebrew/bundle",
-  "homebrew/cask",
   "homebrew/cask-versions",
   "homebrew/linux-fonts",
   "homebrew/services",
