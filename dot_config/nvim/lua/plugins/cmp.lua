@@ -10,6 +10,7 @@ return {
     'davidsierradz/cmp-conventionalcommits', -- auto complete conventional commits
     'saadparwaiz1/cmp_luasnip',
   },
+  event = 'InsertEnter',
   config = function()
     local cmp = require('cmp')
     local lspkind = require('lspkind')
