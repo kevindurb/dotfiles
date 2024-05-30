@@ -15,9 +15,9 @@ EOF
 {{ end -}}
 
 {{ if eq .packageManager "pacman" -}}
-yay -Sy - <<EOF
+sudo pacman -S - <<EOF
 {{ range .packages.linux.pacman -}}
-{{ . | quote }}
+{{ . }}
 {{ end -}}
 EOF
 {{ end -}}
