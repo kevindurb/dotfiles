@@ -24,6 +24,7 @@ ohmyzsh/ohmyzsh path:plugins/yarn
 ohmyzsh/ohmyzsh path:plugins/npm
 ohmyzsh/ohmyzsh path:plugins/kubectl
 ohmyzsh/ohmyzsh path:plugins/zoxide
+ohmyzsh/ohmyzsh path:plugins/asdf
 ohmyzsh/ohmyzsh path:plugins/colored-man-pages
 ohmyzsh/ohmyzsh path:plugins/command-not-found
 
