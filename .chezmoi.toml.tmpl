@@ -1,4 +1,4 @@
-{{ $packageManagerChoices := list "brew" "dnf" "apt" "none" -}}
+{{ $packageManagerChoices := list "brew" "dnf" "apt" "none" "pacman" -}}
 {{ $packageManager := promptChoiceOnce . "packageManager" "Which package manager would you like to use?" $packageManagerChoices -}}
 
 [git]
