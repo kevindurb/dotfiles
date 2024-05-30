@@ -10,9 +10,10 @@ export CLICOLOR=1
 export EDITOR='nvim'
 export VISUAL='nvim'
 export FZF_DEFAULT_COMMAND='rg --files'
-export LESS="-SRXF"
-export ASPNETCORE_ENVIRONMENT="Development"
-export DISABLE_AUTO_TITLE="true"
+export LESS='-SRXF'
+export ASPNETCORE_ENVIRONMENT='Development'
+export DISABLE_AUTO_TITLE='true'
+export ASDF_NODEJS_LEGACY_FILE_DYNAMIC_STRATEGY='latest_available'
 
 if [[ "$(uname)" == 'Darwin' ]]; then
   export GCM_CREDENTIAL_STORE='keychain'
