@@ -132,6 +132,7 @@ pacman = [
   "neovim",
   "prettyping",
   "ripgrep",
+  "starship",
   "tig",
   "tldr",
   "tmux",
