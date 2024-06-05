@@ -20,17 +20,10 @@ else
   alias ll="ls -lahF"
 fi
 
-alias t="todo.sh"
-alias b="buku --suggest"
 alias c="clear"
-alias maketags="ctags -R ."
 alias weather="curl 'wttr.in?0Q'"
 alias forecast="curl wttr.in"
-alias httpserver='python -m http.server 8080'
 alias dadjoke='curl -H "Accept: text/plain" https://icanhazdadjoke.com/'
-alias wtf="clear;cal;date;echo;pwd;echo;git branch"
-alias yaml2json="yq -p yaml -o json"
-alias toml2json="yq -p toml -o json"
 
 if ! type pbcopy > /dev/null; then
   alias pbcopy='xclip -selection clipboard'
@@ -40,6 +33,7 @@ fi
 
 # {{{ Config
 setopt autocd
+setopt completealiases
 # }}}
 
 # {{{ History
