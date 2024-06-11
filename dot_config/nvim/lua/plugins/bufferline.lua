@@ -2,6 +2,6 @@
 return {
   'akinsho/bufferline.nvim', -- pretty tabs
   opts = {
-    options = { separator_style = 'thin', diagnostics = 'nvim_lsp' },
+    options = { separator_style = 'slant', diagnostics = 'nvim_lsp' },
   },
 }
