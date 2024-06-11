@@ -1,8 +1,8 @@
-import = ['~/.config/alacritty/catppuccin-macchiato.toml']
+import = ['~/.config/alacritty/tokyonight_night.toml']
 [font]
 size = 14
 [font.normal]
-family = "JetBrainsMono Nerd Font"
+family = "CaskaydiaCove Nerd Font"
 [env]
 TERM = "xterm-256color"
 [window]
