@@ -86,6 +86,7 @@ casks = [
   "docker",
   "firefox",
   "font-jetbrains-mono-nerd-font",
+  "font-caskaydia-cove-nerd-font",
   "git-credential-manager",
   "keepingyouawake",
   "kitty",
