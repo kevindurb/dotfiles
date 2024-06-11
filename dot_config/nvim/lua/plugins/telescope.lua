@@ -1,6 +1,5 @@
 return {
   'nvim-telescope/telescope.nvim', -- pretty search
-  tag = '0.1.2',
   dependencies = {
     'nvim-lua/plenary.nvim',
     {
