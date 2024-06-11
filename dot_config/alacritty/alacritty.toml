@@ -1,6 +1,6 @@
 import = ['~/.tokyonight/extras/alacritty/tokyonight_storm.toml']
 [font]
-size = 12
+size = 14
 [font.normal]
 family = "CaskaydiaCove Nerd Font"
 [env]
