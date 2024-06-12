@@ -11,6 +11,7 @@ return {
       typescriptreact = { 'biomejs', 'eslint_d' },
       yaml = { 'yamllint' },
       php = { 'phpcs' },
+      go = { 'golangcilint' },
     }
   end,
   init = function()
