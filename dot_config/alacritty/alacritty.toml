@@ -1,9 +1,10 @@
 import = ['~/.tokyonight/extras/alacritty/tokyonight_storm.toml']
 [font]
-size = 14
+size = 13
 [font.normal]
 family = "CaskaydiaCove Nerd Font"
 [env]
 TERM = "xterm-256color"
 [window]
-opacity = 1
+opacity = 0.5
+blur = true

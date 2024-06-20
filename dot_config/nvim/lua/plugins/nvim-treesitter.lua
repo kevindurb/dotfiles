@@ -16,6 +16,7 @@ return {
       'typescript',
       'vim',
       'vimdoc',
+      'gotmpl',
     },
     sync_install = false,
     auto_install = true,
