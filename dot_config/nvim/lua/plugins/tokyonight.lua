@@ -5,6 +5,7 @@ return {
   priority = 1000,
   opts = {
     style = 'storm',
+    transparent = true,
   },
   init = function()
     vim.o.background = 'dark'
