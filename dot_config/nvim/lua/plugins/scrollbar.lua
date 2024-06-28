@@ -1,13 +1,23 @@
 return {
   'petertriho/nvim-scrollbar', -- a scrollbar
   dependencies = {
-    'catppuccin/nvim',
+    'folke/tokyonight.nvim',
   },
   opts = function()
-    local colors = require('catppuccin.palettes').get_palette('macchiato')
+    local colors = require("tokyonight.colors").setup()
 
     return {
-      handle = { text = ' ', color = colors.surface2 },
+      handle = {
+        color = colors.bg_highlight,
+      },
+      marks = {
+          Search = { color = colors.orange },
+          Error = { color = colors.error },
+          Warn = { color = colors.warning },
+          Info = { color = colors.info },
+          Hint = { color = colors.hint },
+          Misc = { color = colors.purple },
+      },
       handlers = {
         cursor = false,
         diagnostic = true,
