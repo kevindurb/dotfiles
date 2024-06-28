@@ -32,6 +32,7 @@ brews = [
   "gd",
   "gh",
   "git",
+  "git-delta",
   "git-extras",
   "gnupg",
   "gnutls",
