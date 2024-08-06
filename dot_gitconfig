@@ -29,7 +29,6 @@
   process = git-lfs filter-process
   required = true
 [commit]
-  template = ~/.stCommitMsg
   gpgsign = true
 [color "diff-highlight"]
   oldNormal = red bold
@@ -66,3 +65,8 @@
   conflictstyle = diff3
 [diff]
   colorMoved = default
+[credential]
+	helper = 
+	helper = /usr/local/share/gcm-core/git-credential-manager
+[credential "https://dev.azure.com"]
+	useHttpPath = true
