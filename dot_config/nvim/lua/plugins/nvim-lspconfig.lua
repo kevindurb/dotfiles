@@ -10,9 +10,6 @@ return {
     local lsp_zero = require('lsp-zero')
     lsp_zero.extend_lspconfig()
 
-    local yamlCompanion = require('yaml-companion')
-    local yamlCompanionConfig = yamlCompanion.setup()
-
     lsp_zero.on_attach(function(client, bufnr)
       lsp_zero.default_keymaps({ buffer = bufnr })
     end)
@@ -43,7 +40,17 @@ return {
         end,
 
         yamlls = function()
-          require('lspconfig').yamlls.setup(yamlCompanionConfig)
+          require('lspconfig').yamlls.setup({
+            settings = {
+              yaml = {
+                schemaStore = {
+                  enable = false,
+                  url = '',
+                },
+                schemas = require('schemastore').yaml.schemas(),
+              },
+            },
+          })
         end,
 
         jsonls = function()
