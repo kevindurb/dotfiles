@@ -5,6 +5,7 @@ return {
   dependencies = {
     'VonHeikemen/lsp-zero.nvim',
     'williamboman/mason-lspconfig.nvim',
+    'b0o/schemastore.nvim',
   },
   init = function()
     local lsp_zero = require('lsp-zero')
@@ -52,7 +53,7 @@ return {
             },
           }
 
-          config.settings.yaml.schemas['kubernetes'] = 'k8s/**/*.ya?ml'
+          config.settings.yaml.schemas['kubernetes'] = 'k8s/**/*.{yml,yaml}'
           require('lspconfig').yamlls.setup(config)
         end,
 
