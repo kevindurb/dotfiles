@@ -40,7 +40,7 @@ return {
         end,
 
         yamlls = function()
-          require('lspconfig').yamlls.setup({
+          local config = {
             settings = {
               yaml = {
                 schemaStore = {
@@ -50,7 +50,10 @@ return {
                 schemas = require('schemastore').yaml.schemas(),
               },
             },
-          })
+          }
+
+          config.settings.yaml.schemas['kubernetes'] = 'k8s/**/*.ya?ml'
+          require('lspconfig').yamlls.setup(config)
         end,
 
         jsonls = function()
