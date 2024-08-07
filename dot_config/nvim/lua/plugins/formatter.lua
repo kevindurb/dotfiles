@@ -35,7 +35,7 @@ return {
         lua = { require('formatter.filetypes.lua').stylua },
         markdown = { require('formatter.filetypes.markdown').prettierd },
         php = { require('formatter.filetypes.php').php_cs_fixer },
-        -- yaml = { require("formatter.filetypes.yaml").prettierd },
+        yaml = { require('formatter.filetypes.yaml').prettierd },
         pug = { util.copyf(defaults.prettierd) },
         toml = { require('formatter.filetypes.toml').taplo },
         cs = { require('formatter.filetypes.cs').dotnetformat },
