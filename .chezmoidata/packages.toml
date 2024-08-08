@@ -59,8 +59,6 @@ brews = [
   "openssh",
   "pgcli",
   "php@8.1",
-  "podman",
-  "podman-compose",
   "prettyping",
   "procs",
   "pv",
