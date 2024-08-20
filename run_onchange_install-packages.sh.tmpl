@@ -1,23 +1,13 @@
 #! /bin/bash
 
-{{ if eq .packageManager "brew" -}}
 brew bundle --no-lock --file=/dev/stdin <<EOF
-{{ range .packages.darwin.taps -}}
+{{ range .packages.taps -}}
 tap {{ . | quote }}
 {{ end -}}
-{{ range .packages.darwin.brews -}}
+{{ range .packages.brews -}}
 brew {{ . | quote }}
 {{ end -}}
-{{ range .packages.darwin.casks -}}
+{{ range .packages.casks -}}
 cask {{ . | quote }}
 {{ end -}}
 EOF
-{{ end -}}
-
-{{ if eq .packageManager "pacman" -}}
-sudo pacman -S - <<EOF
-{{ range .packages.linux.pacman -}}
-{{ . }}
-{{ end -}}
-EOF
-{{ end -}}

@@ -1,4 +1,4 @@
-[packages.darwin]
+[packages]
 taps = [
   "FelixKratz/formulae",
   "homebrew/bundle",
@@ -73,7 +73,7 @@ brews = [
   "tty-clock",
   "yq",
   "zk",
-  "zoxide"
+  "zoxide",
 ]
 casks = [
   "alt-tab",
@@ -108,34 +108,4 @@ casks = [
   "utm",
   "vlc",
   "zoom",
-]
-[packages.linux]
-pacman = [
-  "bat",
-  "bitwarden-cli",
-  "bottom",
-  "chezmoi",
-  "curl",
-  "duf",
-  "entr",
-  "eza",
-  "fzf",
-  "git",
-  "htop",
-  "httpie",
-  "jq",
-  "ncdu",
-  "fastfetch",
-  "neovim",
-  "prettyping",
-  "ripgrep",
-  "starship",
-  "tig",
-  "tldr",
-  "tmux",
-  "tree",
-  "yq",
-  "zk",
-  "zoxide",
-  "zsh",
 ]
