@@ -1,4 +1,4 @@
-import = ['~/.tokyonight/extras/alacritty/tokyonight_storm.toml']
+import = ['./catppuccin-macchiato.toml']
 [font]
 size = 13
 [font.normal]
