@@ -1,5 +1,5 @@
 ---
-git_protocol: https
+git_protocol: ssh
 editor:
 prompt: enabled
 pager: delta -s
