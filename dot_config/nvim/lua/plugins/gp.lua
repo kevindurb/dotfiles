@@ -37,7 +37,7 @@ return {
           min_p = 0.05,
         },
         -- system prompt (use this to specify the persona/role of the AI)
-        system_prompt = require('gp.defaults').code_system_prompt,
+        system_prompt = require('gp').defaults.code_system_prompt,
       },
     },
   },
