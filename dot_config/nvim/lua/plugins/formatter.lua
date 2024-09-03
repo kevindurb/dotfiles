@@ -1,4 +1,5 @@
 return {
+  enabled = false,
   'mhartington/formatter.nvim', -- auto format files
   opts = function()
     local util = require('formatter.util')
