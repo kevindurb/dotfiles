@@ -1,6 +1,6 @@
 return {
   'mfussenegger/nvim-lint', -- linting based on lsp
-  event = 'LazyFile',
+  -- event = 'LazyFile',
   config = function()
     local lint = require('lint')
     lint.linters_by_ft = {
