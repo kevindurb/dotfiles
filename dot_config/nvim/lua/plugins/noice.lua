@@ -1,5 +1,6 @@
 return {
   'folke/noice.nvim',
+  version = '4.4.7', -- workaround for cursor flicker
   event = 'VeryLazy',
   dependencies = {
     'MunifTanjim/nui.nvim',
