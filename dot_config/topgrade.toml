@@ -1,2 +1,2 @@
 [misc]
-disable = ["pnpm", "rcm", "npm", "containers"]
+disable = ["pnpm", "rcm", "node", "yarn", "containers"]
