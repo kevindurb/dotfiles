@@ -1,0 +1,2 @@
+[misc]
+disable = ["pnpm", "rcm", "npm", "containers"]
