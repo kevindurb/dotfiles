@@ -29,7 +29,7 @@ return {
         'lua_ls',
         'marksman',
         'sqlls',
-        'tsserver',
+        'ts_ls',
         'yamlls',
       },
       handlers = {
