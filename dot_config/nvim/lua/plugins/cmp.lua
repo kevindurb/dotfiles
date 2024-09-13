@@ -1,12 +1,12 @@
 return {
-  'hrsh7th/nvim-cmp', -- auto complete menu
+  'hrsh7th/nvim-cmp',                        -- auto complete menu
   dependencies = {
-    'L3MON4D3/LuaSnip', -- snippet engine
-    'onsails/lspkind.nvim', -- Vscode style icons
-    'hrsh7th/cmp-buffer', -- auto complete buffer text
-    'hrsh7th/cmp-emoji', -- auto complete emoji
-    'f3fora/cmp-spell', -- auto complete spelling
-    'petertriho/cmp-git', -- auto complete git things
+    'L3MON4D3/LuaSnip',                      -- snippet engine
+    'onsails/lspkind.nvim',                  -- Vscode style icons
+    'hrsh7th/cmp-buffer',                    -- auto complete buffer text
+    'hrsh7th/cmp-emoji',                     -- auto complete emoji
+    'f3fora/cmp-spell',                      -- auto complete spelling
+    'petertriho/cmp-git',                    -- auto complete git things
     'davidsierradz/cmp-conventionalcommits', -- auto complete conventional commits
     'saadparwaiz1/cmp_luasnip',
   },
@@ -14,8 +14,6 @@ return {
   config = function()
     local cmp = require('cmp')
     local lspkind = require('lspkind')
-    local lsp_zero = require('lsp-zero')
-    lsp_zero.extend_cmp()
 
     cmp.setup({
       snippet = {
