@@ -2,7 +2,6 @@ return {
   'mfussenegger/nvim-dap',
   dependencies = {
     'rcarriga/nvim-dap-ui',
-    'jay-babu/mason-nvim-dap.nvim',
   },
   -- stylua: ignore
   keys = {
