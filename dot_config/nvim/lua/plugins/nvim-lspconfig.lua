@@ -5,6 +5,7 @@ return {
   dependencies = {
     'williamboman/mason-lspconfig.nvim',
     'b0o/schemastore.nvim',
+    'folke/neoconf.nvim',
   },
   init = function()
     -- Global mappings.
