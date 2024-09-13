@@ -11,5 +11,6 @@ return {
       'firefox',
       'chrome',
     },
+    handlers = {},
   },
 }
