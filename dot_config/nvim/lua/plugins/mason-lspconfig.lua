@@ -42,9 +42,9 @@ return {
           capabilities = capabilities,
           on_new_config = function(new_config)
             new_config.settings.yaml.schemas = vim.tbl_deep_extend(
-              "force",
+              'force',
               new_config.settings.yaml.schemas or {},
-              require("schemastore").yaml.schemas()
+              require('schemastore').yaml.schemas()
             )
           end,
           settings = {
@@ -60,10 +60,10 @@ return {
                 -- schemas from SchemaStore.nvim plugin
                 enable = false,
                 -- Avoid TypeError: Cannot read properties of undefined (reading 'length')
-                url = "",
+                url = '',
               },
             },
-          }
+          },
         })
       end,
       ['jsonls'] = function()
@@ -72,7 +72,7 @@ return {
           capabilities = capabilities,
           on_new_config = function(new_config)
             new_config.settings.json.schemas = new_config.settings.json.schemas or {}
-            vim.list_extend(new_config.settings.json.schemas, require("schemastore").json.schemas())
+            vim.list_extend(new_config.settings.json.schemas, require('schemastore').json.schemas())
           end,
           settings = {
             json = {
@@ -84,6 +84,6 @@ return {
           },
         })
       end,
-    }
-  }
+    },
+  },
 }
