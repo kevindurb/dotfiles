@@ -4,6 +4,7 @@ return {
   dependencies = {
     'nvim-lua/plenary.nvim',
     'MunifTanjim/nui.nvim',
+    'echasnovski/mini.icons',
   },
   opts = {
     close_if_last_window = true,

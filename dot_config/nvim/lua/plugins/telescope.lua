@@ -2,6 +2,7 @@ return {
   'nvim-telescope/telescope.nvim', -- pretty search
   dependencies = {
     'nvim-lua/plenary.nvim',
+    'echasnovski/mini.icons',
     {
       'nvim-telescope/telescope-fzf-native.nvim',
       build = 'make',
