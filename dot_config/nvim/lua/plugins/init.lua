@@ -11,6 +11,5 @@ return {
   { 'NoahTheDuke/vim-just', ft = 'just' }, -- justfile
   { 'Glench/Vim-Jinja2-Syntax', ft = 'jinja2' }, -- jinja2 syntax
   'isobit/vim-caddyfile', -- caddyfile highlighting
-  'nvim-tree/nvim-web-devicons', -- cool icons
   'lukas-reineke/indent-blankline.nvim', -- indent guides
 }
