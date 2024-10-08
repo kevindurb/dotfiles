@@ -18,6 +18,7 @@ return {
       'jsonls',
       'lua_ls',
       'marksman',
+      'openscad_lsp',
       'sqlls',
       'ts_ls',
       'yamlls',
