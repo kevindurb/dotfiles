@@ -1,5 +1,6 @@
 return {
   'echasnovski/mini.animate',
+  enabled = false,
   event = 'VeryLazy',
   opts = function()
     -- don't use animate when scrolling with the mouse
