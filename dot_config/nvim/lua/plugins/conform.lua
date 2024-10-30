@@ -13,6 +13,11 @@ return {
             '.eslint.json',
           }),
         },
+        php_cs_fixer = {
+          cwd = require('conform.util').root_file({
+            '.php-cs-fixer.dist.php',
+          }),
+        },
       },
       formatters_by_ft = {
         typescript = { 'biome', 'prettierd', 'eslint_d' },
