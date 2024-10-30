@@ -11,3 +11,12 @@ brew {{ . | quote }}
 cask {{ . | quote }}
 {{ end -}}
 EOF
+
+# Check if the flatpak binary exists, then install flatpaks if any
+if command -v flatpak &> /dev/null; then
+  {{ range .packages.flatpaks -}}
+  flatpak install -y {{ . | quote }}
+  {{ end -}}
+else
+  echo "Flatpak binary not found. Skipping flatpak installations."
+fi
