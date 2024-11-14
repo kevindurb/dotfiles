@@ -11,7 +11,7 @@ if command -v brew &> /dev/null; then
   {{ range .packages.casks -}}
   cask {{ . | quote }}
   {{ end -}}
-  EOF
+EOF
 else
   echo "Brew binary not found. Skipping brew installations."
 fi
