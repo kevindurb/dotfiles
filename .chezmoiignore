@@ -1,4 +1,4 @@
 README.md
 {{- if eq .chezmoi.os "darwin" }}
-dot_ssh/config
+.ssh/config
 {{- end }}
