@@ -1,4 +1,4 @@
 README.md
-{{- if eq .chezmoi.hostname "Kevin-LWNFHQYQ5K" }}
+{{- if eq .chezmoi.os "darwin" }}
 dot_ssh/config
 {{- end }}
