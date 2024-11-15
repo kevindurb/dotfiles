@@ -55,18 +55,17 @@
 [tag]
   gpgsign = true
 [core]
-  pager = delta -s
+  pager = delta
 [interactive]
   diffFilter = delta --color-only
 [delta]
   navigate = true
-  light = false
 [merge]
-  conflictstyle = diff3
+  conflictstyle = zdiff3
 [diff]
   colorMoved = default
 [credential]
-	helper = 
+	helper =
 	helper = /usr/local/share/gcm-core/git-credential-manager
 [credential "https://dev.azure.com"]
 	useHttpPath = true

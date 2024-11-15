@@ -3,8 +3,8 @@ return {
   branch = 'v3.x',
   dependencies = {
     'nvim-lua/plenary.nvim',
-    'nvim-tree/nvim-web-devicons',
     'MunifTanjim/nui.nvim',
+    'echasnovski/mini.icons',
   },
   opts = {
     close_if_last_window = true,

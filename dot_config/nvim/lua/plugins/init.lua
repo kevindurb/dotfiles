@@ -3,7 +3,6 @@
 return {
   'tpope/vim-fugitive', -- git commands in vim
   'tpope/vim-repeat', -- repeating plugin commands
-  'tpope/vim-surround', -- surround with things
   'tpope/vim-unimpaired', -- mappings for things with '['
   'tpope/vim-eunuch', -- helpful unixy commands
   'tpope/vim-abolish', -- messing with words and casing
@@ -11,6 +10,5 @@ return {
   { 'NoahTheDuke/vim-just', ft = 'just' }, -- justfile
   { 'Glench/Vim-Jinja2-Syntax', ft = 'jinja2' }, -- jinja2 syntax
   'isobit/vim-caddyfile', -- caddyfile highlighting
-  'nvim-tree/nvim-web-devicons', -- cool icons
   'lukas-reineke/indent-blankline.nvim', -- indent guides
 }

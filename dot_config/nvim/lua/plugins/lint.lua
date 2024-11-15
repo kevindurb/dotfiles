@@ -13,6 +13,7 @@ return {
       yaml = { 'yamllint' },
       php = { 'phpcs' },
       go = { 'golangcilint' },
+      dockerfile = { 'hadolint' },
     }
   end,
   init = function()
