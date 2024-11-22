@@ -8,14 +8,10 @@ taps = [
   "microsoft/git",
 ]
 brews = [
-  "athenacli",
   "aws-vault",
   "awscli",
-  "bandwhich",
   "bash",
   "bat",
-  "biome",
-  "bitwarden-cli",
   "bottom",
   "chezmoi",
   "cmake",
@@ -74,7 +70,6 @@ brews = [
   "tree",
   "tty-clock",
   "yq",
-  "zk",
   "zoxide",
 ]
 casks = [
