@@ -5,11 +5,11 @@ return {
     local lint = require('lint')
     lint.linters_by_ft = {
       ansible = { 'ansible_lint' },
-      javascript = { 'biomejs', 'eslint_d', 'snyk_iac' },
-      javascriptreact = { 'biomejs', 'eslint_d' },
+      javascript = { 'biomejs', 'eslint', 'snyk_iac' },
+      javascriptreact = { 'biomejs', 'eslint' },
       shell = { 'shellcheck' },
-      typescript = { 'biomejs', 'eslint_d' },
-      typescriptreact = { 'biomejs', 'eslint_d' },
+      typescript = { 'biomejs', 'eslint' },
+      typescriptreact = { 'biomejs', 'eslint' },
       yaml = { 'yamllint' },
       php = { 'phpcs' },
       go = { 'golangcilint' },

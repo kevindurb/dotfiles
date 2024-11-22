@@ -2,7 +2,7 @@ local options = {
   ensure_installed = {
     'ansible-lint',
     'biome',
-    'eslint_d',
+    'eslint',
     'firefox-debug-adapter',
     'js-debug-adapter',
     'php-cs-fixer',
