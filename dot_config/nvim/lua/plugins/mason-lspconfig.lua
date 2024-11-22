@@ -11,7 +11,7 @@ return {
       'bashls',
       'cssls',
       'dockerls',
-      'eslint',
+      'eslint_d',
       'graphql',
       'html',
       'intelephense',
