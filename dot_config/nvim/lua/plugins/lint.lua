@@ -1,9 +1,8 @@
 return {
   'mfussenegger/nvim-lint', -- linting based on lsp
   -- event = 'LazyFile',
-  config = function()
-    local lint = require('lint')
-    lint.linters_by_ft = {
+  opts = {
+    linters_by_ft = {
       ansible = { 'ansible_lint' },
       javascript = { 'biomejs', 'eslint_d', 'snyk_iac' },
       javascriptreact = { 'biomejs', 'eslint_d' },
@@ -14,8 +13,22 @@ return {
       php = { 'phpcs' },
       go = { 'golangcilint' },
       dockerfile = { 'hadolint' },
-    }
-  end,
+    },
+    linters = {
+      eslint_d = {
+        args = {
+          '--no-warn-ignored',
+          '--format',
+          'json',
+          '--stdin',
+          '--stdin-filename',
+          function()
+            return vim.api.nvim_buf_get_name(0)
+          end,
+        },
+      },
+    },
+  },
   init = function()
     local lint = require('lint')
     vim.api.nvim_create_autocmd({ 'BufWritePost' }, {
