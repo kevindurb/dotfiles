@@ -6,7 +6,7 @@ family = "Hack Nerd Font"
 [env]
 TERM = "xterm-256color"
 [window]
-opacity = 1
+opacity = 0.95
 blur = false
 [shell]
 program = "zsh"

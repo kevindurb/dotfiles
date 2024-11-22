@@ -5,7 +5,7 @@ return {
   enabled = true,
   opts = {
     flavour = 'macchiato',
-    transparent_background = false,
+    transparent_background = true,
     background = {
       light = 'latte',
       dark = 'macchiato',
