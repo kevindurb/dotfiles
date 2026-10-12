@@ -1,0 +1,11 @@
+[Unit]
+Description=Tailscale WebDAV drive
+
+[Mount]
+What=http://100.100.100.100:8080
+Where=/home/kevindurb/tailscale
+Type=davfs
+Options=noauto,uid=%U,gid=%G
+
+[Install]
+WantedBy=default.target

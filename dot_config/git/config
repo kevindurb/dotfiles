@@ -1,0 +1,99 @@
+# vi: ft=gitconfig
+[core]
+  editor = nvim
+  excludesfile = ~/.config/git/ignore
+  pager = delta
+[user]
+  name = Kevin Durbin
+  email = kevindurb@fastmail.com
+[color]
+  diff = auto
+  status = auto
+  branch = auto
+  interactive = auto
+  ui = true
+  pager = true
+[color "branch"]
+  current = yellow reverse
+  local = yellow
+  remote = green
+[color "status"]
+  added = green
+  changed = red
+  untracked = cyan
+[push]
+  default = current
+[rerere]
+  enabled = 1
+[filter "lfs"]
+  clean = git-lfs clean -- %f
+  smudge = git-lfs smudge -- %f
+  process = git-lfs filter-process
+  required = true
+[color "diff-highlight"]
+  oldNormal = red bold
+  oldHighlight = red bold 52
+  newNormal = green bold
+  newHighlight = green bold 22
+[color "diff"]
+  meta = yellow
+  frag = magenta bold
+  commit = yellow bold
+  old = red bold
+  new = green bold
+  whitespace = red reverse
+[pull]
+  rebase = false
+[init]
+  defaultBranch = main
+[core]
+  pager = delta
+[interactive]
+  diffFilter = delta --color-only
+[delta]
+  navigate = true
+[merge]
+  conflictstyle = zdiff3
+[diff]
+  colorMoved = default
+[alias]
+  a = add
+  aa = add --all
+  ap = add --patch
+  b = checkout -b
+  bD = branch -D
+  bd = branch -d
+  c = commit
+  ca = commit -a
+  cai = !task -g llm:commit
+  cam = commit -am
+  cm = commit -m
+  co = checkout
+  cp = cherry-pick
+  d = diff
+  f = fetch
+  fa = fetch --all --prune
+  l = pull
+  ll = log --oneline
+  m = merge
+  p = push
+  rhh = reset --hard
+  s = status -sb
+  sw = switch
+  wt = worktree
+  wta = worktree add
+  wtls = worktree list
+  wtmv = worktree move
+  wtrm = worktree remove
+  wtp = worktree prune
+[help]
+  autocorrect = prompt
+[includeIf "gitdir:~/Development/"]
+  path = ~/Development/.gitconfig
+[safe]
+	directory = /work
+[sendemail]
+  smtpServer = smtp.fastmail.com
+  smtpUser = kevindurb@fastmail.com
+  smtpEncryption = ssl
+  smtpServerPort = 465

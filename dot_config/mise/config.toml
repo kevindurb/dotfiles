@@ -1,0 +1,7 @@
+[tools]
+go = "1.26.5"
+node = "26"
+python = "3"
+
+[settings]
+python.github_attestations = false

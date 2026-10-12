@@ -1,0 +1,6 @@
+require('kevindurb.filetype')
+require('kevindurb.general')
+require('kevindurb.ripgrep')
+require('kevindurb.pack')
+require('plugins')
+require('kevindurb.keymaps')

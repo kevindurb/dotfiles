@@ -1,0 +1,28 @@
+ServerAliveInterval 5
+ServerAliveCountMax 1
+AddKeysToAgent yes
+
+Host work
+  HostName github.com
+  IdentityFile ~/.ssh/work
+  IdentitiesOnly yes
+
+Host github.com
+  HostName ssh.github.com
+  Port 443
+
+Host tablet steamdeck hoth corellia ender3 dev
+  User kevindurb
+
+Host router travel-router
+  User root
+
+Host bastion-01
+  User core
+
+Host unimatrix-01 unimatrix-02 unimatrix-03 drone-01 drone-02 drone-03 drone-04
+  User core
+
+Host workdevbox
+  User kevindurb
+  ForwardAgent yes

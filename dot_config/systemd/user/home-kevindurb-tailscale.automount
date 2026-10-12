@@ -1,0 +1,8 @@
+[Unit]
+Description=Automount Tailscale WebDAV drive
+
+[Automount]
+Where=/home/kevin/tailscale
+
+[Install]
+WantedBy=default.target

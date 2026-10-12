@@ -1,0 +1,32 @@
+{
+  "providers": {
+    "aperture": {
+      "baseUrl": "https://ai.beaver-cloud.ts.net/v1",
+      "api": "openai-completions",
+      "apiKey": "not-required",
+      "models": [
+        {
+          "id": "gpt-oss:120b"
+        },
+        {
+          "id": "glm-5.3"
+        },
+        {
+          "id": "deepseek-v4.1-flash"
+        },
+        {
+          "id": "glm-5.3-flash"
+        },
+        {
+          "id": "kimi-k2.7-code"
+        },
+        {
+          "id": "qwen/qwen3.8-27b"
+        },
+        {
+          "id": "google/gemma4-e4b"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,11 @@
+README.md
+.config/vial
+{{ if ne .chezmoi.os "darwin" }}
+.macos
+{{ end }}
+{{ if ne .chezmoi.os "linux" }}
+.config/systemd
+{{ end }}
+{{ if not .work }}
+Development
+{{ end }}

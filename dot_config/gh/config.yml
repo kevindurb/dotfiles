@@ -1,0 +1,22 @@
+---
+git_protocol: ssh
+editor: nvim
+prompt: enabled
+pager: delta -s
+aliases:
+  co: pr checkout
+  myprs: |
+    pr list -S 'author:@me is:open'
+    --json number,title,reviews
+    --jq '.[] | [.number, .title,
+    ([.reviews
+      | group_by(.author.login)[]
+      | {user: .[-1].author.login, state: .[-1].state}]
+    | map("\(.user): \(.state)")
+    | join(", "))] | @tsv'
+  prurl: pr view --json url -q '.url'
+  prv: pr view --comments
+  i: issue
+http_unix_socket:
+browser:
+version: '1'

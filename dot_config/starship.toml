@@ -1,0 +1,24 @@
+"$schema" = 'https://starship.rs/config-schema.json'
+
+[env_var.HOMEBREW_INSIDE_BUNDLE]
+symbol = "🍺 "
+format = "[$symbol]($style)"
+style = "bold yellow"
+
+[jobs]
+disabled = false
+symbol_threshold = 1
+number_threshold = 1
+
+[package]
+disabled = true
+
+[directory.substitutions]
+"~" = '🏠'
+
+[character]
+success_symbol = '[➜](bold green) '
+error_symbol = '[✗](bold red) '
+
+[aws]
+disabled = true
