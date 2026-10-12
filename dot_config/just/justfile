@@ -4,8 +4,6 @@
 @setup:
   echo "=== HOMEBREW ==="
   just -g brew-bundle install
-  echo "=== MISE ==="
-  mise install
   echo "=== YAZI ==="
   ya pkg install
   echo "=== FISHER ==="
@@ -15,8 +13,6 @@
   echo "=== HOMEBREW ==="
   brew update
   brew upgrade
-  echo "=== MISE ==="
-  mise upgrade
   echo "=== YAZI ==="
   ya pkg upgrade
   echo "=== FISHER ==="
