@@ -26,16 +26,12 @@ if ! command -v brew >/dev/null 2>&1; then
     done
 fi
 
-if ! command -v brew >/dev/null 2>&1; then
-    echo "brew not found, skipping package installation" >&2
-    exit 0
-fi
+if command -v brew >/dev/null 2>&1; then
+    export HOMEBREW_BUNDLE_NO_UPGRADE=1
+    export HOMEBREW_NO_ENV_HINTS=1
+    export HOMEBREW_CASK_OPTS="--appdir=${HOME}/Applications"
 
-export HOMEBREW_BUNDLE_NO_UPGRADE=1
-export HOMEBREW_NO_ENV_HINTS=1
-export HOMEBREW_CASK_OPTS="--appdir=${HOME}/Applications"
-
-brew bundle --file=/dev/stdin <<'BREWFILE'
+    brew bundle --file=/dev/stdin <<'BREWFILE'
 # vim: set ft=ruby:
 cask_args appdir: "~/Applications", require_sha: true
 ENV["PATH"] = "#{HOMEBREW_PREFIX}/bin:#{ENV["PATH"]}"
@@ -43,6 +39,23 @@ ENV["PATH"] = "#{HOMEBREW_PREFIX}/bin:#{ENV["PATH"]}"
 {{ end }}{{ range $cask }}cask {{ . | quote }}
 {{ end }}{{ range $npm }}npm {{ . | quote }}
 {{ end }}{{ range $uv }}uv {{ . | quote }}
-{{ end }}{{ if lookPath "flatpak" }}{{ range $flatpak }}flatpak {{ . | quote }}
-{{ end }}{{ end }}BREWFILE
-{{ end -}}
+{{ end }}BREWFILE
+else
+    echo "brew not found, skipping Homebrew packages" >&2
+fi
+{{ if $flatpak }}
+if command -v flatpak >/dev/null 2>&1; then
+    flatpak remote-add --user --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+    failed=""
+    for app in {{ range $flatpak }}{{ . | quote }} {{ end }}; do
+        flatpak install --user --assumeyes --noninteractive flathub "${app}" || failed="${failed} ${app}"
+    done
+    if [ -n "${failed}" ]; then
+        echo "failed to install Flatpak packages:${failed}" >&2
+        exit 1
+    fi
+else
+    echo "flatpak not found, skipping Flatpak packages" >&2
+fi
+{{ end }}
+{{- end -}}

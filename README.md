@@ -17,9 +17,13 @@ chezmoi init --apply kevindurb
 ## Packages
 
 Packages are declared in [`.chezmoidata/packages.yaml`](.chezmoidata/packages.yaml)
-and installed by Homebrew Bundle from `run_onchange_install-packages.sh.tmpl`,
-which re-runs whenever the package list changes.
+and installed by `run_onchange_install-packages.sh.tmpl`, which re-runs whenever
+the package list changes.
 
 The lists are split by operating system (`common`, `darwin`, `linux`).
 
-Flatpak packages are only installed on machines that have `flatpak` installed.
+Homebrew formulae, casks, npm and uv packages are installed by Homebrew Bundle.
+
+Flatpak packages are installed with `flatpak install --user` from the
+`flathub` remote, so no root privileges are needed. They are only installed on
+machines that have `flatpak` installed.
