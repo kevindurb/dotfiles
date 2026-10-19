@@ -22,7 +22,3 @@ Host bastion-01
 
 Host unimatrix-01 unimatrix-02 unimatrix-03 drone-01 drone-02 drone-03 drone-04
   User core
-
-Host workdevbox
-  User kevindurb
-  ForwardAgent yes
