@@ -20,6 +20,4 @@ Packages are declared in [`.chezmoidata/packages.yaml`](.chezmoidata/packages.ya
 and installed by Homebrew Bundle from `run_onchange_install-packages.sh.tmpl`,
 which re-runs whenever the package list changes.
 
-The lists are split by operating system (`common`, `darwin`, `linux`) and by
-machine type (`base`, `work`). Work machines are selected with the `work`
-prompt during `chezmoi init`.
+The lists are split by operating system (`common`, `darwin`, `linux`).
