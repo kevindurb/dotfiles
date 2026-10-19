@@ -1,0 +1,3 @@
+# Replaced by the declarative package list in .chezmoidata/packages.yaml.
+.config/homebrew/Brewfile
+Development/Brewfile

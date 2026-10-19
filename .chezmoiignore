@@ -2,6 +2,3 @@ README.md
 {{ if ne .chezmoi.os "darwin" }}
 .macos
 {{ end }}
-{{ if not .work }}
-Development
-{{ end }}

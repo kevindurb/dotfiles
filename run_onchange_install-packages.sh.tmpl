@@ -1,0 +1,57 @@
+{{- $os := .chezmoi.os -}}
+{{- if or (eq $os "darwin") (eq $os "linux") -}}
+{{- $common := index .packages "common" | default dict -}}
+{{- $osPkgs := index .packages $os | default dict -}}
+{{- $base := index $osPkgs "base" | default dict -}}
+{{- $workOs := index $osPkgs "work" | default dict -}}
+{{- $brew := concat (index $common "brew" | default (list)) (index $base "brew" | default (list)) -}}
+{{- $cask := concat (index $common "cask" | default (list)) (index $base "cask" | default (list)) -}}
+{{- $npm := concat (index $common "npm" | default (list)) (index $base "npm" | default (list)) -}}
+{{- $uv := concat (index $common "uv" | default (list)) (index $base "uv" | default (list)) -}}
+{{- $flatpak := index $base "flatpak" | default (list) -}}
+{{- if .work -}}
+{{- $brew = concat $brew (index $workOs "brew" | default (list)) -}}
+{{- $cask = concat $cask (index $workOs "cask" | default (list)) -}}
+{{- $npm = concat $npm (index $workOs "npm" | default (list)) -}}
+{{- $uv = concat $uv (index $workOs "uv" | default (list)) -}}
+{{- $flatpak = concat $flatpak (index $workOs "flatpak" | default (list)) -}}
+{{- end -}}
+#!/usr/bin/env bash
+#
+# Install the packages declared in .chezmoidata/packages.yaml.
+#
+# chezmoi re-runs this script whenever the package list changes.
+
+set -eu
+
+# Homebrew is not necessarily on PATH when chezmoi runs this script.
+if ! command -v brew >/dev/null 2>&1; then
+    for dir in "${HOME}/.linuxbrew/bin" /home/linuxbrew/.linuxbrew/bin /opt/homebrew/bin /usr/local/bin; do
+        if [ -x "${dir}/brew" ]; then
+            PATH="${dir}:${PATH}"
+            export PATH
+            break
+        fi
+    done
+fi
+
+if ! command -v brew >/dev/null 2>&1; then
+    echo "brew not found, skipping package installation" >&2
+    exit 0
+fi
+
+export HOMEBREW_BUNDLE_NO_UPGRADE=1
+export HOMEBREW_NO_ENV_HINTS=1
+export HOMEBREW_CASK_OPTS="--appdir=${HOME}/Applications"
+
+brew bundle --file=/dev/stdin <<'BREWFILE'
+# vim: set ft=ruby:
+cask_args appdir: "~/Applications", require_sha: true
+ENV["PATH"] = "#{HOMEBREW_PREFIX}/bin:#{ENV["PATH"]}"
+{{ range $brew }}brew {{ . | quote }}
+{{ end }}{{ range $cask }}cask {{ . | quote }}
+{{ end }}{{ range $npm }}npm {{ . | quote }}
+{{ end }}{{ range $uv }}uv {{ . | quote }}
+{{ end }}{{ range $flatpak }}flatpak {{ . | quote }}
+{{ end }}BREWFILE
+{{ end -}}
