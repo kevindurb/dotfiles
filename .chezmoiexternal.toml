@@ -1,0 +1,41 @@
+# tmux plugins, managed as git repositories.
+#
+# chezmoi clones each repo on first apply, then pulls updates at most once
+# every 168h (weekly). Force a refresh with:
+#   chezmoi apply --refresh-externals
+
+[".config/tmux/plugins/tmux-sensible"]
+    type = "git-repo"
+    url = "https://github.com/tmux-plugins/tmux-sensible"
+    pull = { args = ["--ff-only"] }
+    refreshPeriod = "168h"
+
+[".config/tmux/plugins/tmux-pain-control"]
+    type = "git-repo"
+    url = "https://github.com/tmux-plugins/tmux-pain-control"
+    pull = { args = ["--ff-only"] }
+    refreshPeriod = "168h"
+
+[".config/tmux/plugins/tmux-sessionist"]
+    type = "git-repo"
+    url = "https://github.com/tmux-plugins/tmux-sessionist"
+    pull = { args = ["--ff-only"] }
+    refreshPeriod = "168h"
+
+[".config/tmux/plugins/tmux-nerd-font-window-name"]
+    type = "git-repo"
+    url = "https://github.com/joshmedeski/tmux-nerd-font-window-name"
+    pull = { args = ["--ff-only"] }
+    refreshPeriod = "168h"
+
+[".config/tmux/plugins/tokyonight.nvim"]
+    type = "git-repo"
+    url = "https://github.com/folke/tokyonight.nvim"
+    pull = { args = ["--ff-only"] }
+    refreshPeriod = "168h"
+
+[".config/tmux/plugins/tokyo-night-tmux"]
+    type = "git-repo"
+    url = "https://github.com/janoamaral/tokyo-night-tmux"
+    pull = { args = ["--ff-only"] }
+    refreshPeriod = "168h"
