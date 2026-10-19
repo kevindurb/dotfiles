@@ -30,3 +30,4 @@ set -gx FX_THEME               1
 fish_add_path --global --append $XDG_DATA_HOME/npm/bin
 fish_add_path --global --append $HOME/.local/bin
 fish_add_path --global --append $GOPATH/bin
+fish_add_path --global --append $DOTNET_CLI_HOME/.dotnet/tools
