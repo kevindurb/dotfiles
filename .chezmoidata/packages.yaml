@@ -134,10 +134,6 @@ packages:
       - 'golangci-lint'
       # neovim
       - 'neovim'
-      # AI
-      - 'tilth'
-    uv:
-      - 'cocoindex-code[full]'
 
   darwin:
     brew:
