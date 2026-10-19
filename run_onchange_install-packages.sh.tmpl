@@ -43,6 +43,6 @@ ENV["PATH"] = "#{HOMEBREW_PREFIX}/bin:#{ENV["PATH"]}"
 {{ end }}{{ range $cask }}cask {{ . | quote }}
 {{ end }}{{ range $npm }}npm {{ . | quote }}
 {{ end }}{{ range $uv }}uv {{ . | quote }}
-{{ end }}{{ range $flatpak }}flatpak {{ . | quote }}
-{{ end }}BREWFILE
+{{ end }}{{ if lookPath "flatpak" }}{{ range $flatpak }}flatpak {{ . | quote }}
+{{ end }}{{ end }}BREWFILE
 {{ end -}}

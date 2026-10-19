@@ -21,3 +21,5 @@ and installed by Homebrew Bundle from `run_onchange_install-packages.sh.tmpl`,
 which re-runs whenever the package list changes.
 
 The lists are split by operating system (`common`, `darwin`, `linux`).
+
+Flatpak packages are only installed on machines that have `flatpak` installed.
