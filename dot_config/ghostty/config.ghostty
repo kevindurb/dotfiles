@@ -1,0 +1,5 @@
+font-family = FiraCode Nerd Font
+font-size = 13
+theme = TokyoNight Storm
+
+keybind = shift+enter=text:\x1b\r
