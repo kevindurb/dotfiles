@@ -161,6 +161,7 @@ packages:
       - 'dotnet-sdk'
       - 'firefox'
       - 'font-fira-code-nerd-font'
+      - 'ghostty'
       - 'hiddenbar'
       - 'keepingyouawake'
       - 'localsend'
