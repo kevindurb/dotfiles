@@ -1,0 +1,97 @@
+#!/usr/bin/env bash
+#
+# Print Aperture's model catalog as a JSON object for OpenCode's provider
+# `models` map. Read from cache unless it is older than APERTURE_MODELS_TTL
+# (default 6h); `--refresh` forces a fetch.
+#
+# Chat-completions models only. Dated aliases (deepseek-v4-pro:0813) are
+# dropped when the undated model is available; real suffixes on model names
+# (gpt-oss:120b, gemma4:31b) are kept. Duplicate IDs keep the first entry.
+#
+# Never fails: on error it prints the last good catalog, or a minimal fallback.
+
+set -u
+
+ENDPOINT="${APERTURE_MODELS_URL:-https://ai.beaver-cloud.ts.net/v1/models}"
+CACHE="${XDG_CACHE_HOME:-${HOME}/.cache}/opencode/aperture-models.json"
+TTL="${APERTURE_MODELS_TTL:-21600}"
+
+fallback() {
+	cat <<'JSON'
+{
+  "deepseek-v4.1-flash": {
+    "name": "DeepSeek V4.1 Flash",
+    "capabilities": {
+      "tools": true
+    },
+    "limit": {
+      "context": 1048576,
+      "output": 384000
+    }
+  }
+}
+JSON
+}
+
+refresh=0
+for arg in "$@"; do
+	case "${arg}" in
+	--refresh | -r) refresh=1 ;;
+	--help | -h)
+		sed -n '3,10p' "$0" | sed 's/^# \{0,1\}//'
+		exit 0
+		;;
+	esac
+done
+
+mtime_of() {
+	date -r "$1" +%s 2>/dev/null || stat -c %Y "$1" 2>/dev/null || echo 0
+}
+
+if [ "${refresh}" -eq 0 ] && [ -s "${CACHE}" ]; then
+	if [ $(($(date +%s) - $(mtime_of "${CACHE}"))) -lt "${TTL}" ]; then
+		cat "${CACHE}"
+		exit 0
+	fi
+fi
+
+reuse_cache() {
+	if [ -s "${CACHE}" ]; then
+		cat "${CACHE}"
+	else
+		fallback
+	fi
+	exit 0
+}
+
+command -v curl >/dev/null 2>&1 || reuse_cache
+command -v jq >/dev/null 2>&1 || reuse_cache
+
+mkdir -p "$(dirname "${CACHE}")" || reuse_cache
+tmp=$(mktemp "${TMPDIR:-/tmp}/aperture-models.XXXXXX") || reuse_cache
+trap 'rm -f "${tmp}" "${tmp}.models" "${tmp}.final"' EXIT
+
+curl -fsS --max-time 5 "${ENDPOINT}" -o "${tmp}" 2>/dev/null || reuse_cache
+
+if ! jq -e '
+	.data
+	| map(select((.supported_endpoints // []) | index("/v1/chat/completions")))
+	| map({ id: .id, name: (.display_name // .id), ctx: .context_window_tokens, out: .max_output_tokens })
+	| . as $all
+	| ($all | map(.id)) as $ids
+	| [ $all[] | select(
+	      ((.id | test(":[0-9]{4}$")) | not)
+	      or ((.id | sub(":[0-9]{4}$"; "")) as $base | ($ids | index($base)) == null)
+	    ) ]
+	| reduce .[] as $m ({}; if .[$m.id] then . else .[$m.id] = {
+	    name: $m.name,
+	    capabilities: { tools: true },
+	    limit: { context: ($m.ctx // 200000), output: ($m.out // 32000) }
+	  } end)
+' "${tmp}" >"${tmp}.models" 2>/dev/null; then
+	reuse_cache
+fi
+
+{ cat "${tmp}.models"; echo; } >"${tmp}.final" || reuse_cache
+mv "${tmp}.final" "${CACHE}" || reuse_cache
+cat "${CACHE}"
