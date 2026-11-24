@@ -1,0 +1,140 @@
+# Tekton pipeline for this repository, resolved remotely by Tekton's git
+# resolver at build time (poller in kevindurb/k8s → infrastructure/tsgit-ci).
+# Edit this file to change CI; no cluster access is required.
+#
+# The poller creates a PipelineRun with:
+#   pipelineRef: {resolver: git, params: [url=<repo>, revision=<sha>, pathInRepo=ci/pipeline.yaml]}
+# and passes params repo (clone URL), revision (commit sha), branch.
+#
+# Tekton resolves this file from the exact commit being built, so CI is
+# versioned with the code it tests.
+apiVersion: tekton.dev/v1
+kind: Pipeline
+metadata:
+  name: validate-repo
+spec:
+  description: Clone this repository and validate it (chezmoi dry-run + shellcheck).
+  params:
+    - name: repo
+      type: string
+    - name: revision
+      type: string
+    - name: branch
+      type: string
+      default: main
+  workspaces:
+    - name: source
+    - name: tools
+  tasks:
+    - name: checks
+      taskSpec:
+        params:
+          - name: repo
+            type: string
+          - name: revision
+            type: string
+          - name: branch
+            type: string
+        workspaces:
+          - name: source
+          - name: tools
+        steps:
+          - name: clone
+            image: alpine/git:2.54.1@sha256:29cff25811f790b9f72fc266bf8009a5a911714c0e03c31c47339c50909d9aef
+            securityContext:
+              runAsNonRoot: true
+              runAsUser: 65534
+              runAsGroup: 65534
+              readOnlyRootFilesystem: true
+              allowPrivilegeEscalation: false
+              capabilities:
+                drop: ["ALL"]
+            env:
+              # git refuses the root-owned emptyDir workspace without this; the pod is ephemeral.
+              - name: GIT_CONFIG_COUNT
+                value: "1"
+              - name: GIT_CONFIG_KEY_0
+                value: safe.directory
+              - name: GIT_CONFIG_VALUE_0
+                value: "*"
+            script: |
+              #!/bin/sh
+              set -eu
+              cd "$(workspaces.source.path)"
+              git init -q
+              git remote add origin "$(params.repo)"
+              # tsgit serves arbitrary reachable SHAs. Build exactly the pinned
+              # revision or fail loudly - never silently build a different one.
+              git fetch --depth 1 origin "$(params.revision)"
+              git checkout -q --detach FETCH_HEAD
+              echo "cloned $(git rev-parse HEAD)"
+          - name: fetch-chezmoi
+            image: curlimages/curl:8.23.0@sha256:3fb7e13e5d179a845c97d78204f3f1064d1907037f26a3ebf91710571151fd93
+            securityContext:
+              runAsNonRoot: true
+              runAsUser: 65534
+              runAsGroup: 65534
+              readOnlyRootFilesystem: true
+              allowPrivilegeEscalation: false
+              capabilities:
+                drop: ["ALL"]
+            script: |
+              #!/bin/sh
+              set -eu
+              base=https://github.com/twpayne/chezmoi/releases/download/v2.74.2
+              # musl build: the check step image is Alpine/shellcheck-alpine
+              file=chezmoi_2.74.2_linux-musl_amd64.tar.gz
+              want=0570eea5af5dea146d872423a65bdf46f140087fbb01ed279dc0c219e1e1da49
+              cd "$(workspaces.tools.path)"
+              curl -fsSL -o "$file" "$base/$file"
+              echo "$want  $file" | sha256sum -c -
+              tar xzf "$file"
+              rm "$file"
+              chmod 755 chezmoi
+          - name: check
+            image: koalaman/shellcheck-alpine:v0.11.0@sha256:9955be09ea7f0dbf7ae942ac1f2094355bb30d96fffba0ec09f5432207544002
+            securityContext:
+              runAsNonRoot: true
+              runAsUser: 65534
+              runAsGroup: 65534
+              readOnlyRootFilesystem: true
+              allowPrivilegeEscalation: false
+              capabilities:
+                drop: ["ALL"]
+            env:
+              - name: HOME
+                value: $(workspaces.tools.path)
+              # Tekton does not expand shell variables in env values; this is literal.
+              - name: PATH
+                value: $(workspaces.tools.path):/usr/local/bin:/usr/local/sbin:/usr/bin:/bin
+            script: |
+              #!/bin/sh
+              set -eu
+              SRC="$(workspaces.source.path)"
+              TOOLS="$(workspaces.tools.path)"
+              cd "$SRC"
+              echo "== chezmoi dry-run apply"
+              chezmoi --source "$SRC" --destination "$TOOLS/target" apply --dry-run --verbose
+              echo "== render + shellcheck *.sh.tmpl"
+              find . -type f -name '*.sh.tmpl' -print | while IFS= read -r f; do
+                echo "-- $f"
+                chezmoi --source "$SRC" execute-template < "$f" | shellcheck -s bash -
+              done
+              echo "== shellcheck plain *.sh"
+              find . -path ./.git -prune -o -type f -name '*.sh' -print | while IFS= read -r f; do
+                echo "-- $f"
+                shellcheck -s bash "$f"
+              done
+              echo "dotfiles-check: OK"
+      params:
+        - name: repo
+          value: $(params.repo)
+        - name: revision
+          value: $(params.revision)
+        - name: branch
+          value: $(params.branch)
+      workspaces:
+        - name: source
+          workspace: source
+        - name: tools
+          workspace: tools
