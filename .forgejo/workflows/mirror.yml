@@ -1,6 +1,12 @@
 name: mirror
 
 on:
+  push:
+    branches: ['**']
+    tags: ['**']
+  schedule:
+    # self-healing: re-sync even if a push-triggered run was missed
+    - cron: '17 * * * *'
   workflow_dispatch:
     inputs:
       dry_run:
