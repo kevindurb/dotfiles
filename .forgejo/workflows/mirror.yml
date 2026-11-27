@@ -13,10 +13,13 @@ jobs:
   mirror:
     runs-on: [self-hosted, linux]
     steps:
-      - name: Probe secret availability
+      - name: Mint token via action
+        id: app-token
+        uses: actions/create-github-app-token@v3
+        with:
+          client-id: ${{ secrets.MIRROR_APP_CLIENT_ID }}
+          private-key: ${{ secrets.MIRROR_APP_PRIVATE_KEY }}
+      - name: Report token shape
+        run: echo "token length ${#APP_TOKEN}"
         env:
-          CID: ${{ secrets.MIRROR_APP_CLIENT_ID }}
-          PEM: ${{ secrets.MIRROR_APP_PRIVATE_KEY }}
-        run: |
-          echo "cid length: ${#CID}"
-          echo "pem bytes: ${#PEM}"
+          APP_TOKEN: ${{ steps.app-token.outputs.token }}
