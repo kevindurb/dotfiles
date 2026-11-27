@@ -13,8 +13,22 @@ jobs:
   mirror:
     runs-on: [self-hosted, linux]
     steps:
-      - name: Guarded step
-        if: ${{ ! github.event.inputs.dry_run }}
-        run: echo guarded-step-ran
-      - name: Plain step
-        run: echo plain-step-ran
+      - name: Probe secret availability
+        env:
+          CID: ${{ secrets.MIRROR_APP_CLIENT_ID }}
+          PEM: ${{ secrets.MIRROR_APP_PRIVATE_KEY }}
+        run: |
+          echo "client id length: ${#CID}"
+          echo "pem bytes: ${#PEM}"
+          echo "server: ${{ github.server_url }}"
+      - name: Mint token via action
+        id: app-token
+        uses: actions/create-github-app-token@v3
+        with:
+          client-id: ${{ secrets.MIRROR_APP_CLIENT_ID }}
+          private-key: ${{ secrets.MIRROR_APP_PRIVATE_KEY }}
+      - name: Show mint result shape (not the token)
+        env:
+          T: ${{ steps.app-token.outputs.token }}
+        run: |
+          echo "token length: ${#T}"
