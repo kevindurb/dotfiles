@@ -1,0 +1,72 @@
+# Forgejo Actions CI for this repo. Replaces the Tekton pipeline that ran on
+# tsgit (see ci/pipeline.yaml, kept for reference until Tekton is retired).
+# Runs on the self-hosted forgejo runner as root on the runner VM, mirroring
+# the Tekton task's semantics:
+#   1. chezmoi dry-run apply (renders every template)
+#   2. chezmoi execute-template | shellcheck for every *.sh.tmpl
+#   3. shellcheck on every *.sh
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    runs-on: [self-hosted, linux]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Fetch pinned chezmoi and shellcheck
+        run: |
+          set -euo pipefail
+          TOOLS=/tmp/dotfiles-ci-tools
+          DEST=/tmp/dotfiles-target
+          rm -rf "$TOOLS" "$DEST"
+          mkdir -p "$TOOLS" "$DEST"
+          cd "$TOOLS"
+
+          curl -fsSL -o chezmoi.tgz https://github.com/twpayne/chezmoi/releases/download/v2.74.2/chezmoi_2.74.2_linux-glibc_amd64.tar.gz
+          echo "5f2024119a1860f18f2243b892dd43a79f0fefe2ebef9786ee143f4d5fd69ccb  chezmoi.tgz" | sha256sum -c -
+          tar xzf chezmoi.tgz
+
+          curl -fsSL -o shellcheck.tar.xz https://github.com/koalaman/shellcheck/releases/download/v0.11.0/shellcheck-v0.11.0.linux.x86_64.tar.xz
+          echo "8c3be12b05d5c177a04c29e3c78ce89ac86f1595681cab149b65b97c4e227198  shellcheck.tar.xz" | sha256sum -c -
+          tar xJf shellcheck.tar.xz
+          ln -s "$TOOLS/shellcheck-v0.11.0/shellcheck" "$TOOLS/shellcheck"
+
+      - name: chezmoi dry-run apply
+        run: |
+          set -euo pipefail
+          export PATH="/tmp/dotfiles-ci-tools:$PATH"
+          echo "== chezmoi dry-run apply"
+          chezmoi --source "$GITHUB_WORKSPACE" --destination /tmp/dotfiles-target apply --dry-run --verbose
+
+      - name: Render + shellcheck *.sh.tmpl
+        run: |
+          set -euo pipefail
+          export PATH="/tmp/dotfiles-ci-tools:$PATH"
+          cd "$GITHUB_WORKSPACE"
+          find . -type f -name '*.sh.tmpl' -print | while IFS= read -r f; do
+            echo "-- $f"
+            chezmoi --source "$GITHUB_WORKSPACE" execute-template < "$f" | shellcheck -s bash -
+          done
+
+      - name: shellcheck plain *.sh
+        run: |
+          set -euo pipefail
+          export PATH="/tmp/dotfiles-ci-tools:$PATH"
+          cd "$GITHUB_WORKSPACE"
+          find . -path ./.git -prune -o -type f -name '*.sh' -print | while IFS= read -r f; do
+            echo "-- $f"
+            shellcheck -s bash "$f"
+          done
+
+      - name: OK
+        run: echo "dotfiles-check OK"
