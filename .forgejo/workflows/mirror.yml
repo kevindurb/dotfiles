@@ -1,0 +1,17 @@
+name: mirror
+
+on:
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: Compute the ref diff and log it without pushing
+        required: false
+        type: boolean
+        default: true
+
+jobs:
+  mirror:
+    uses: kevindurb/ci-workflows/.forgejo/workflows/mirror.yml@main
+    secrets: inherit
+    with:
+      dry-run: ${{ github.event.inputs.dry_run || false }}
