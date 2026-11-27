@@ -13,6 +13,16 @@ jobs:
   mirror:
     runs-on: [self-hosted, linux]
     steps:
+      - name: Resolve push intent
+        id: opts
+        run: |
+          DRY="${{ github.event.inputs.dry_run }}"
+          case "$DRY" in
+            true|True|1|yes) echo "push=false" >> "${FORGEJO_OUTPUT:-$GITHUB_OUTPUT}" ;;
+            *)               echo "push=true"  >> "${FORGEJO_OUTPUT:-$GITHUB_OUTPUT}" ;;
+          esac
+          echo "push=$( [ "$DRY" = "true" ] && echo false || echo true ) (dry_run input='$DRY')"
+
       - name: Fetch all branches and tags from forgejo
         run: |
           set -euo pipefail
@@ -81,7 +91,7 @@ jobs:
           diff /tmp/gh.refs /tmp/src.refs || true
 
       - name: Push mirror (branches and tags, never deletes)
-        if: ${{ ! github.event.inputs.dry_run }}
+        if: steps.opts.outputs.push == 'true'
         env:
           GH_TOKEN: ${{ steps.app-token.outputs.token }}
         run: |
@@ -91,7 +101,7 @@ jobs:
             '+refs/heads/*:refs/heads/*' '+refs/tags/*:refs/tags/*'
 
       - name: Verify mirror matches source
-        if: ${{ ! github.event.inputs.dry_run }}
+        if: steps.opts.outputs.push == 'true'
         env:
           GH_TOKEN: ${{ steps.app-token.outputs.token }}
         run: |
