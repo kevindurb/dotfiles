@@ -11,9 +11,15 @@ concurrency:
 jobs:
   check:
     runs-on: [self-hosted, linux]
+    env:
+      # The forgejo runner does not set HOME for run steps; chezmoi needs it.
+      HOME: /tmp/dotfiles-ci-home
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+      - name: Prepare HOME
+        run: mkdir -p "$HOME"
 
       - name: Fetch pinned chezmoi and shellcheck
         run: |
