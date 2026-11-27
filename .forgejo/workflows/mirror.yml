@@ -11,7 +11,7 @@ on:
 
 jobs:
   mirror:
-    uses: kevindurb/ci-workflows/.forgejo/workflows/mirror.yml@main
+    uses: ./.forgejo/workflows/mirror-reusable.yml
     secrets: inherit
     with:
       dry-run: ${{ github.event.inputs.dry_run || false }}

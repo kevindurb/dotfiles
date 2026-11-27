@@ -1,0 +1,118 @@
+# Reusable workflow: mirror a forgejo repository to GitHub.
+#
+# Per-repo caller example:
+#
+#   on:
+#     push: { branches: ['**'], tags: ['**'] }
+#     schedule: [{ cron: '23 * * * *' }]   # optional self-healing
+#     workflow_dispatch:
+#   jobs:
+#     mirror:
+#       uses: kevindurb/ci-workflows/.forgejo/workflows/mirror.yml@main
+#       secrets: inherit
+#
+# Required secrets (user-level, or per-repo on the caller repo):
+#   MIRROR_APP_CLIENT_ID    - client ID of the forgejo-mirror GitHub App
+#   MIRROR_APP_PRIVATE_KEY  - PEM private key of the app
+#
+# Refs mirrored: refs/heads/* and refs/tags/*, force-updated, never deleted.
+# The GitHub repo must already exist (installation tokens cannot create repos).
+
+name: mirror-to-github
+
+on:
+  workflow_call:
+    inputs:
+      github-repo:
+        description: "Target repo as owner/name (default: same owner/name as this forgejo repo)"
+        required: false
+        type: string
+        default: ""
+      dry-run:
+        description: "Print what would change without pushing anything"
+        required: false
+        type: boolean
+        default: false
+    # NOTE: forgejo rejects a `secrets:` block here (only inputs/outputs are
+    # supported). The caller opts in with `secrets: inherit` (or an explicit
+    # map), and the job below reads them from the secrets context.
+
+concurrency:
+  group: mirror-${{ github.repository }}
+  cancel-in-progress: false
+
+jobs:
+  mirror:
+    runs-on: [self-hosted, linux]
+    steps:
+      - name: Resolve target repository
+        id: target
+        run: |
+          set -euo pipefail
+          TARGET="${{ inputs.github-repo }}"
+          if [ -z "$TARGET" ]; then TARGET="${{ github.repository }}"; fi
+          echo "target=$TARGET" >> "$GITHUB_OUTPUT"
+          echo "Mirroring ${{ github.repository }} -> $TARGET (dry-run=${{ inputs.dry-run }})"
+
+      - name: Mint GitHub App installation token
+        id: app-token
+        uses: actions/create-github-app-token@v3
+        with:
+          client-id: ${{ secrets.MIRROR_APP_CLIENT_ID }}
+          private-key: ${{ secrets.MIRROR_APP_PRIVATE_KEY }}
+
+      - name: Fetch all branches and tags from forgejo
+        run: |
+          set -euo pipefail
+          HOST_PATH="${{ github.server_url }}"
+          HOST_PATH="${HOST_PATH#http://}"
+          HOST_PATH="${HOST_PATH#https://}"
+          SRC="https://x-access-token:${{ github.token }}@${HOST_PATH}/${{ github.repository }}.git"
+          rm -rf /tmp/mirror.git
+          git init --bare --quiet /tmp/mirror.git
+          git -C /tmp/mirror.git fetch --prune "$SRC" \
+            '+refs/heads/*:refs/heads/*' '+refs/tags/*:refs/tags/*'
+
+      - name: Check target repository exists
+        run: |
+          set -euo pipefail
+          CODE=$(curl -s -o /tmp/repo-check.json -w '%{http_code}' \
+            -H "Authorization: Bearer ${{ steps.app-token.outputs.token }}" \
+            -H "Accept: application/vnd.github+json" \
+            "https://api.github.com/repos/${{ steps.target.outputs.target }}")
+          if [ "$CODE" != "200" ]; then
+            echo "::error::GitHub repo '${{ steps.target.outputs.target }}' not found or not visible (HTTP $CODE)."
+            echo "::error::Create it first (private, same name), then re-run. App installation tokens cannot create repositories."
+            exit 1
+          fi
+
+      - name: Compute ref diff
+        run: |
+          set -euo pipefail
+          GH="https://x-access-token:${{ steps.app-token.outputs.token }}@github.com/${{ steps.target.outputs.target }}.git"
+          git ls-remote "$GH" 'refs/heads/*' 'refs/tags/*' | sed 's/\t/ /' | sort > /tmp/gh.refs || true
+          git ls-remote /tmp/mirror.git 'refs/heads/*' 'refs/tags/*' | sed 's/\t/ /' | sort > /tmp/src.refs
+          echo '--- refs differing or missing on GitHub ---'
+          diff /tmp/gh.refs /tmp/src.refs || true
+
+      - name: Push mirror (branches and tags, never deletes)
+        if: ${{ inputs.dry-run != true }}
+        run: |
+          set -euo pipefail
+          GH="https://x-access-token:${{ steps.app-token.outputs.token }}@github.com/${{ steps.target.outputs.target }}.git"
+          git -C /tmp/mirror.git push --force "$GH" \
+            '+refs/heads/*:refs/heads/*' '+refs/tags/*:refs/tags/*'
+
+      - name: Verify mirror matches source
+        if: ${{ inputs.dry-run != true }}
+        run: |
+          set -euo pipefail
+          GH="https://x-access-token:${{ steps.app-token.outputs.token }}@github.com/${{ steps.target.outputs.target }}.git"
+          git ls-remote "$GH" 'refs/heads/*' 'refs/tags/*' | sed 's/\t/ /' | sort > /tmp/gh2.refs
+          git ls-remote /tmp/mirror.git 'refs/heads/*' 'refs/tags/*' | sed 's/\t/ /' | sort > /tmp/src2.refs
+          if ! diff -q /tmp/gh2.refs /tmp/src2.refs >/dev/null; then
+            echo "::error::Mirror verification failed; ref mismatch after push:"
+            diff /tmp/gh2.refs /tmp/src2.refs || true
+            exit 1
+          fi
+          echo "Mirror verified: GitHub refs identical to forgejo."
