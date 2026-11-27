@@ -1,10 +1,3 @@
-# Forgejo Actions CI for this repo. Replaces the Tekton pipeline that ran on
-# tsgit (see ci/pipeline.yaml, kept for reference until Tekton is retired).
-# Runs on the self-hosted forgejo runner as root on the runner VM, mirroring
-# the Tekton task's semantics:
-#   1. chezmoi dry-run apply (renders every template)
-#   2. chezmoi execute-template | shellcheck for every *.sh.tmpl
-#   3. shellcheck on every *.sh
 name: ci
 
 on:
