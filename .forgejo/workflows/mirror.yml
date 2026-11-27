@@ -25,12 +25,11 @@ jobs:
           git -C /tmp/mirror.git fetch --prune "$SRC" \
             '+refs/heads/*:refs/heads/*' '+refs/tags/*:refs/tags/*'
 
-      - name: Mint GitHub App installation token
+      - name: Mint GitHub App installation token (stubbed for bisect)
         id: app-token
-        uses: actions/create-github-app-token@v3
-        with:
-          client-id: ${{ secrets.MIRROR_APP_CLIENT_ID }}
-          private-key: ${{ secrets.MIRROR_APP_PRIVATE_KEY }}
+        run: echo "JWT_STUB_OK" >> "$GITHUB_OUTPUT" || true
+        env:
+          STUB: ok
 
       - name: Check target repository exists
         env:
